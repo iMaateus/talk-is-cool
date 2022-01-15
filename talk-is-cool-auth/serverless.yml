@@ -1,0 +1,32 @@
+service: talk-is-cool-auth
+useDotenv: true
+
+frameworkVersion: '2'
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  core-layer: arn:aws:lambda:${aws:region}:${aws:accountId}:layer:talk-is-cool-core-${self:custom.stage}:latest
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 128
+  logRetentionInDays: 1
+  versionFunctions: false
+  lambdaHashingVersion: 20201221
+  environment: ${file(../talk-is-cool-envs/${self:custom.stage}.env.json)}
+
+functions:
+  auth:
+    handler: src/handlers/auth.auth
+    layers:
+      - ${self:custom.core-layer}
+    events:
+      - http:
+          path: auth
+          method: post
+          cors: true
+
+plugins:
+- serverless-offline
+- serverless-latest-layer-version
