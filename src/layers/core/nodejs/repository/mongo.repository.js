@@ -14,7 +14,7 @@ exports.findMany = async function (connectionString, model, filter, options) {
 
 exports.updateOne = async function (connectionString, model, filter, update, upsert) {
     await mongoConnection.connect(connectionString);
-    return await model.updateOne(filter, update, {upsert: true})
+    return await model.updateOne(filter, update, {upsert: upsert})
 }
 
 exports.deleteOne = async function (connectionString, model, filter) {
