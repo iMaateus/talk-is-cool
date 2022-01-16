@@ -20,7 +20,7 @@ provider:
 
 layers:
   Core:
-    path: src/layers/core
+    path: layers/core
     name: talk-is-cool-core-${self:custom.stage}
 
 functions:

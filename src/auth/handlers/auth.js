@@ -7,6 +7,6 @@ const userService = require('../services/user.service.js');
 
 module.exports.auth = middy(async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
-    return await userService.generateToken(event.body.email, utils.fieldToBool(event.queryStringParameters, 'isParent'));
+    return await userService.generateToken(event.body, utils.fieldToBool(event.queryStringParameters, 'isParent'));
 }).use(parser())
     .use(requestHandler())

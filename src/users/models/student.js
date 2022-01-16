@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const extend = require('../general/extendSchema');
+const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
+const extend = require(process.env.CORE_LAYER + 'utils/extendSchema');
 const client = require('./client');
 
 const studentSchema = extend.extendSchema(client.schema,

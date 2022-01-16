@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const extend = require('../general/extendSchema');
+const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
+const extend = require(process.env.CORE_LAYER + 'utils/extendSchema');
 const client = require('./client');
-const tag = require('./tag');
+const tag = require('../../tags/models/tag');
 
 const userSchema = extend.extendSchema(client.schema,
     {
@@ -13,4 +13,3 @@ const userSchema = extend.extendSchema(client.schema,
 
 module.exports.model = mongoose.model('users', userSchema)
 module.exports.schema = userSchema
-

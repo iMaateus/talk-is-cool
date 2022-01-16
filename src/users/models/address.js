@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
 
 const addressSchema = new mongoose.Schema(
     {
