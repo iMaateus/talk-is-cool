@@ -1,5 +1,5 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
-const address = require('../../users/models/address');
+const address = require('./address');
 
 const schoolSchema = new mongoose.Schema(
     {

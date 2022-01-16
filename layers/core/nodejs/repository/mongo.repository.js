@@ -28,6 +28,7 @@ function resolveQuery(options){
     }
 
     let query = {
+        ignoreLimit: options.ignoreLimit,
         projection: options.projection,
         limit: options.limit,
         page: options.page,
@@ -38,6 +39,8 @@ function resolveQuery(options){
     if (query.projection == null) query.projection = {};
     if (query.limit != null) query.limit = Number(query.limit);
     if (query.page != null) query.page = Number(query.page);
+    if (query.ignoreLimit != null) query.ignoreLimit = JSON.parse(query.ignoreLimit);
+    if (query.asc != null) query.asc = Number(query.asc);
 
     query.limit = query.ignoreLimit ? null : query.limit == null || query.limit == 0 ? 1 : query.limit > 20 ? 20 : query.limit
     query.skip = query.ignoreLimit ? null : query.page == null || query.page == 0 ? null : query.limit * (query.page - 1)

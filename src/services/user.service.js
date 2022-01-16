@@ -2,14 +2,14 @@ const httpError = require(process.env.CORE_LAYER_MODULE + 'http-errors');
 const mongoRepository = require(process.env.CORE_LAYER + 'repository/mongo.repository');
 const token = require(process.env.CORE_LAYER + 'security/token');
 const cryptography = require(process.env.CORE_LAYER + 'security/cryptography');
-const user = require('../../users/models/user');
-const parent = require('../../users/models/parent');
-const student = require('../../users/models/student');
-const shemasValidation = require('../validations/shemas.validation');
+const user = require('../models/user');
+const parent = require('../models/parent');
+const student = require('../models/student');
+const shemasValidation = require('../validations/auth.validation');
 
 module.exports.generateToken = async function (body, isParent) {
     shemasValidation.validateAuth(body);
-
+    
     let options = {
         projection: "firstname lastname password photo role school"
     }

@@ -1,5 +1,5 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
-const school = require('../../schools/models/school');
+const school = require('./school');
 
 const clientSchema = new mongoose.Schema(
     {
