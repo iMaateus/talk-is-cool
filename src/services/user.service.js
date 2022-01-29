@@ -5,10 +5,10 @@ const cryptography = require(process.env.CORE_LAYER + 'security/cryptography');
 const user = require('../models/user');
 const parent = require('../models/parent');
 const student = require('../models/student');
-const shemasValidation = require('../validations/auth.validation');
+const authValidation = require('../validations/auth.validation');
 
 module.exports.generateToken = async function (body, isParent) {
-    shemasValidation.validateAuth(body);
+    authValidation.validateAuth(body);
     
     let options = {
         projection: "firstname lastname password photo role school"

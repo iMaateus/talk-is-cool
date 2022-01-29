@@ -10,7 +10,7 @@ const schoolSchema = new mongoose.Schema(
         address: address.schema
     },
     {
-		timestamps: true,
+		timestamps: true
 	}
 );
 

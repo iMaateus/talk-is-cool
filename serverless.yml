@@ -5,6 +5,8 @@ frameworkVersion: '2'
 
 custom:
   stage: ${opt:stage, 'dev'}
+  auth-functions: ${file(templates/auth.yml)}
+  tags-functions: ${file(templates/tags.yml)}
 
 provider:
   name: aws
@@ -24,20 +26,8 @@ layers:
     name: talk-is-cool-core-${self:custom.stage}
 
 functions:
-  auth:
-    handler: src/handlers/auth.auth
-    events:
-      - http:
-          path: auth
-          method: post
-          cors: true
-  tags-search:
-    handler: src/handlers/tags.search
-    events:
-      - http:
-          path: tags
-          method: get
-          cors: true
+  - ${self:custom.auth-functions}
+  - ${self:custom.tags-functions}
 
 plugins:
 - serverless-offline

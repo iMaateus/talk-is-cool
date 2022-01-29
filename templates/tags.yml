@@ -1,0 +1,35 @@
+tags-search:
+  handler: src/handlers/tags.search
+  events:
+    - http:
+        path: tags
+        method: get
+        cors: true
+tags-get:
+  handler: src/handlers/tags.get
+  events:
+    - http:
+        path: tags/{tagId}
+        method: get
+        cors: true
+tags-post:
+  handler: src/handlers/tags.post
+  events:
+    - http:
+        path: tags
+        method: post
+        cors: true
+tags-put:
+  handler: src/handlers/tags.put
+  events:
+    - http:
+        path: tags
+        method: put
+        cors: true
+tags-delete:
+  handler: src/handlers/tags.delete
+  events:
+    - http:
+        path: tags/{tagId}
+        method: delete
+        cors: true

@@ -1,3 +1,4 @@
+const httpError = require('http-errors');
 const jwt = require('jsonwebtoken');
 const jwtdecode = require('jwt-decode');
 
@@ -19,7 +20,10 @@ exports.createToken = function (user) {
 }
 
 exports.validateToken = function (token) {
-    return jwt.verify(token.replace('Bearer ', ''), process.env.TOKEN_SECRET);
+    return jwt.verify(token.replace('Bearer ', ''), process.env.TOKEN_SECRET, function (err, decoded) {
+        if (err) throw new httpError(401, "Unauthorized");
+        return decoded;
+    });
 }
 
 exports.generatePolicy = function (principalId, methodArn) {

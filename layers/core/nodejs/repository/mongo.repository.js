@@ -12,7 +12,12 @@ exports.findMany = async function (connectionString, model, filter, options) {
     return await model.find(filter, query.projection, { skip: query.skip, limit: query.limit }).sort([[query.sort, query.asc]])
 }
 
-exports.updateOne = async function (connectionString, model, filter, update, upsert) {
+exports.insertOne = async function (connectionString, document) {
+    await mongoConnection.connect(connectionString);
+    return await document.save()
+}
+
+exports.updateOne = async function (connectionString, model, filter, update, upsert = false) {
     await mongoConnection.connect(connectionString);
     return await model.updateOne(filter, update, {upsert: upsert})
 }
@@ -44,5 +49,6 @@ function resolveQuery(options){
 
     query.limit = query.ignoreLimit ? null : query.limit == null || query.limit == 0 ? 1 : query.limit > 20 ? 20 : query.limit
     query.skip = query.ignoreLimit ? null : query.page == null || query.page == 0 ? null : query.limit * (query.page - 1)
+    
     return query
 }

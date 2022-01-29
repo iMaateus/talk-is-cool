@@ -1,0 +1,7 @@
+auth:
+  handler: src/handlers/auth.auth
+  events:
+    - http:
+        path: auth
+        method: post
+        cors: true

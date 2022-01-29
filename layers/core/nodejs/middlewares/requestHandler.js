@@ -11,7 +11,7 @@ module.exports = (opts) => {
             if (!request.event.headers.Authorization) {
                 throw new httpError(401, "Unauthorized");
             }
-
+            
             const identity = token.validateToken(request.event.headers.Authorization);
 
             if (options.permissions) {
@@ -21,7 +21,6 @@ module.exports = (opts) => {
             }
 
             request.event['identity'] = identity
-            console.log(request)
         }
     }
 
