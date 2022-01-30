@@ -16,6 +16,18 @@ module.exports.me = middy(async (event, context, callback) => {
 }).use(parser())
     .use(requestHandler({ private: true, permissions: ['ADMIN', 'TEACHER', 'COORDINATOR', 'SECRETARY'] }))
 
+module.exports.like = middy(async (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    return await talkService.like(event.identity, event.pathParameters.talkId);
+}).use(parser())
+    .use(requestHandler({ private: true, permissions: ['ADMIN', 'TEACHER', 'COORDINATOR', 'SECRETARY', 'PARENT', 'STUDENT'] }))
+
+module.exports.dislike = middy(async (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    return await talkService.dislike(event.identity, event.pathParameters.talkId);
+}).use(parser())
+    .use(requestHandler({ private: true, permissions: ['ADMIN', 'TEACHER', 'COORDINATOR', 'SECRETARY', 'PARENT', 'STUDENT'] }))
+
 module.exports.post = middy(async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     return await talkService.insert(event.identity, event.body);

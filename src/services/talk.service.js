@@ -55,6 +55,26 @@ module.exports.insert = async function (identity, body) {
     return await setS3Urls(newTalk, process.env.TALKS_BUCKET)
 }
 
+module.exports.like = async function (identity, talkId) {
+    let filter = {
+        'user._id': mongoose.mongo.ObjectId(identity.id),
+        'talk._id': mongoose.mongo.ObjectId(talkId)
+    };
+
+    let update = {};
+
+    return await mongoRepository.updateOne(process.env.MONGODB, talkLikes.model, filter, update, true);
+}
+
+module.exports.dislike = async function (identity, talkId) {
+    let filter = {
+        'user._id': mongoose.mongo.ObjectId(identity.id),
+        'talk._id': mongoose.mongo.ObjectId(talkId)
+    };
+
+    return await mongoRepository.deleteOne(process.env.MONGODB, talkLikes.model, filter);
+}
+
 async function setS3Urls(object, bucket) {
     if (Array.isArray(object)) {
         for (let item of object) {

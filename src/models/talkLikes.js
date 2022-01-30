@@ -13,5 +13,19 @@ const talkLikesSchema = new mongoose.Schema(
     }
 );
 
+talkLikesSchema.pre('save', function (next) {
+    this.set('user', {
+        _id: false,
+        timestamps: false
+    });
+
+    this.set('talk', {
+        _id: false,
+        timestamps: false
+    });
+
+    next();
+});
+
 module.exports.model = mongooseExtend.loadModel('talkLikes', talkLikesSchema)
 module.exports.schema = talkLikesSchema

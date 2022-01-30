@@ -12,6 +12,20 @@ talks-me:
         path: talk/me
         method: get
         cors: true
+talks-like:
+  handler: src/handlers/talks.like
+  events:
+    - http:
+        path: talk/{talkId}/like
+        method: put
+        cors: true
+talks-dislike:
+  handler: src/handlers/talks.dislike
+  events:
+    - http:
+        path: talk/{talkId}/dislike
+        method: put
+        cors: true
 talks-post:
   handler: src/handlers/talks.post
   events:
