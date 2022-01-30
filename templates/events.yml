@@ -1,0 +1,35 @@
+events-search:
+  handler: src/handlers/events.search
+  events:
+    - http:
+        path: events
+        method: get
+        cors: true
+events-get:
+  handler: src/handlers/events.get
+  events:
+    - http:
+        path: events/{eventId}
+        method: get
+        cors: true
+events-post:
+  handler: src/handlers/events.post
+  events:
+    - http:
+        path: events
+        method: post
+        cors: true
+events-put:
+  handler: src/handlers/events.put
+  events:
+    - http:
+        path: events
+        method: put
+        cors: true
+events-delete:
+  handler: src/handlers/events.delete
+  events:
+    - http:
+        path: events/{eventId}
+        method: delete
+        cors: true

@@ -1,0 +1,7 @@
+channels-search:
+  handler: src/handlers/channels.search
+  events:
+    - http:
+        path: channels
+        method: get
+        cors: true

@@ -12,6 +12,8 @@ exports.createToken = function (user) {
             lastname: user.lastname,
             role: user.role,
             schoolId: user.school._id,
+            isAdmin: user.role == 'ADMIN',
+            isClient: user.role == 'PARENT' || user.role == 'STUDENT'
         },
         process.env.TOKEN_SECRET,
         {

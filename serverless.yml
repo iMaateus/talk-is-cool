@@ -7,6 +7,8 @@ custom:
   stage: ${opt:stage, 'dev'}
   auth-functions: ${file(templates/auth.yml)}
   tags-functions: ${file(templates/tags.yml)}
+  channels-functions: ${file(templates/channels.yml)}
+  events-functions: ${file(templates/events.yml)}
 
 provider:
   name: aws
@@ -28,6 +30,8 @@ layers:
 functions:
   - ${self:custom.auth-functions}
   - ${self:custom.tags-functions}
+  - ${self:custom.channels-functions}
+  - ${self:custom.events-functions}
 
 plugins:
 - serverless-offline
