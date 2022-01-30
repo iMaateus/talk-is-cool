@@ -7,6 +7,7 @@
         "@middy/core": "^2.5.1",
         "@middy/do-not-wait-for-empty-event-loop": "^2.5.1",
         "@middy/http-json-body-parser": "^2.5.1",
+        "aws-sdk": "^2.1066.0",
         "bcryptjs": "^2.4.3",
         "fluent-validator": "^1.1.0",
         "http-errors": "^1.8.0",

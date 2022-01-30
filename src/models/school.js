@@ -1,4 +1,5 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
+const mongooseExtend = require(process.env.CORE_LAYER + 'utils/mongooseExtend');
 const address = require('./address');
 
 const schoolSchema = new mongoose.Schema(
@@ -14,5 +15,5 @@ const schoolSchema = new mongoose.Schema(
 	}
 );
 
-module.exports.model = mongoose.model('schools', schoolSchema)
+module.exports.model = mongooseExtend.loadModel('schools', schoolSchema)
 module.exports.schema = schoolSchema

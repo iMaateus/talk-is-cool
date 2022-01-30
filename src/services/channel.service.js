@@ -4,9 +4,7 @@ const channel = require('../models/channel');
 
 module.exports.search = async function (identity, options) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId)
     };
 
     if (!identity.isAdmin && !identity.isClient) {

@@ -1,12 +1,12 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
-const extend = require(process.env.CORE_LAYER + 'utils/extendSchema');
+const mongooseExtend = require(process.env.CORE_LAYER + 'utils/mongooseExtend');
 const client = require('./client');
 
-const parentSchema = extend.extendSchema(client.schema,
+const parentSchema = mongooseExtend.extendSchema(client.schema,
     {
         students: [client.schema]
     }
 );
 
-module.exports.model = mongoose.model('parents', parentSchema)
+module.exports.model = mongooseExtend.loadModel('parents', parentSchema)
 module.exports.schema = parentSchema

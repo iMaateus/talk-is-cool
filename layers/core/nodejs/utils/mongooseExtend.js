@@ -6,3 +6,9 @@ module.exports.extendSchema = function (Schema, definition, options) {
         options
     );
 }
+
+module.exports.loadModel = function (modelName, modelSchema) {
+    return mongoose.models[modelName]
+        ? mongoose.model(modelName)
+        : mongoose.model(modelName, modelSchema, modelName)
+}

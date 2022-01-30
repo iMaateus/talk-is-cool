@@ -9,6 +9,7 @@ custom:
   tags-functions: ${file(templates/tags.yml)}
   channels-functions: ${file(templates/channels.yml)}
   events-functions: ${file(templates/events.yml)}
+  talks-functions: ${file(templates/talks.yml)}
 
 provider:
   name: aws
@@ -32,6 +33,7 @@ functions:
   - ${self:custom.tags-functions}
   - ${self:custom.channels-functions}
   - ${self:custom.events-functions}
+  - ${self:custom.talks-functions}
 
 plugins:
 - serverless-offline

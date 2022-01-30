@@ -1,0 +1,14 @@
+talks-search:
+  handler: src/handlers/talks.search
+  events:
+    - http:
+        path: talk
+        method: get
+        cors: true
+talks-me:
+  handler: src/handlers/talks.me
+  events:
+    - http:
+        path: talk/me
+        method: get
+        cors: true

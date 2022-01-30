@@ -29,7 +29,7 @@ module.exports.generateToken = async function (body, isParent) {
 
 getClientByEmail = async function (email, isParent, options) {
     let filter = {
-        email: { '$regex': '^' + email + '$', $options: 'i' }
+        'email': { '$regex': '^' + email + '$', $options: 'i' }
     }
 
     if (isParent == null) {

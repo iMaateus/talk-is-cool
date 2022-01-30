@@ -5,9 +5,7 @@ const tagValidation = require('../validations/tag.validation');
 
 module.exports.search = async function (identity, options) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId)
     };
 
     if (options.search != null) {
@@ -19,10 +17,8 @@ module.exports.search = async function (identity, options) {
 
 module.exports.get = async function (identity, tagId, options) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
-        _id: mongoose.mongo.ObjectId(tagId)
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(tagId)
     };
 
     return await mongoRepository.findOne(process.env.MONGODB, tag.model, filter, options);
@@ -46,10 +42,8 @@ module.exports.update = async function (identity, body) {
     tagValidation.validateUpsert(body, true)
 
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
-        _id: mongoose.mongo.ObjectId(body._id)
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(body._id)
     };
 
     let update = {
@@ -62,10 +56,8 @@ module.exports.update = async function (identity, body) {
 
 module.exports.delete = async function (identity, tagId) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
-        _id: mongoose.mongo.ObjectId(tagId)
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(tagId)
     };
 
     return await mongoRepository.deleteOne(process.env.MONGODB, tag.model, filter);

@@ -1,4 +1,5 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
+const mongooseExtend = require(process.env.CORE_LAYER + 'utils/mongooseExtend');
 const school = require('./school');
 
 const tagSchema = new mongoose.Schema(
@@ -20,5 +21,5 @@ tagSchema.pre('save', function(next) {
     next();
 });
 
-module.exports.model = mongoose.model('tags', tagSchema)
+module.exports.model = mongooseExtend.loadModel('tags', tagSchema)
 module.exports.schema = tagSchema

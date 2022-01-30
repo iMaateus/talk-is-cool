@@ -5,9 +5,7 @@ const eventValidation = require('../validations/event.validation');
 
 module.exports.search = async function (identity, options) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId)
     };
 
     if (options.search != null) {
@@ -19,10 +17,8 @@ module.exports.search = async function (identity, options) {
 
 module.exports.get = async function (identity, eventId, options) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
-        _id: mongoose.mongo.ObjectId(eventId)
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(eventId)
     };
 
     return await mongoRepository.findOne(process.env.MONGODB, event.model, filter, options);
@@ -50,10 +46,8 @@ module.exports.update = async function (identity, body) {
     eventValidation.validateUpsert(body, true)
 
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
-        _id: mongoose.mongo.ObjectId(body._id)
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(body._id)
     };
 
     let update = {
@@ -70,10 +64,8 @@ module.exports.update = async function (identity, body) {
 
 module.exports.delete = async function (identity, eventId) {
     let filter = {
-        school: {
-            _id: mongoose.mongo.ObjectId(identity.schoolId)
-        },
-        _id: mongoose.mongo.ObjectId(eventId)
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(eventId)
     };
 
     return await mongoRepository.deleteOne(process.env.MONGODB, event.model, filter);

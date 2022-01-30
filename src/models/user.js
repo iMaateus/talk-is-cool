@@ -1,9 +1,9 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
-const extend = require(process.env.CORE_LAYER + 'utils/extendSchema');
+const mongooseExtend = require(process.env.CORE_LAYER + 'utils/mongooseExtend');
 const client = require('./client');
 const tag = require('./tag');
 
-const userSchema = extend.extendSchema(client.schema,
+const userSchema = mongooseExtend.extendSchema(client.schema,
     {
         webAccess: Boolean,
         mobileAccess: String,
@@ -11,5 +11,5 @@ const userSchema = extend.extendSchema(client.schema,
     }
 );
 
-module.exports.model = mongoose.model('users', userSchema)
+module.exports.model = mongooseExtend.loadModel('users', userSchema)
 module.exports.schema = userSchema

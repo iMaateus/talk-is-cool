@@ -1,4 +1,5 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
+const mongooseExtend = require(process.env.CORE_LAYER + 'utils/mongooseExtend');
 const school = require('./school');
 const tag = require('./tag');
 
@@ -45,5 +46,5 @@ eventSchema.pre('updateOne', function (next) {
     next();
 });
 
-module.exports.model = mongoose.model('events', eventSchema)
+module.exports.model = mongooseExtend.loadModel('events', eventSchema)
 module.exports.schema = eventSchema
