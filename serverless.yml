@@ -20,6 +20,13 @@ provider:
   versionFunctions: false
   lambdaHashingVersion: 20201221
   environment: ${file(envs/${self:custom.stage}.env.json)}
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - 's3:*'
+          Resource: "*"
   layers:
     - { Ref: CoreLambdaLayer }
 

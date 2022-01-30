@@ -29,15 +29,14 @@ talkSchema.pre('save', function (next) {
         timestamps: false
     });
 
-    this.set('user', {
-        _id: false,
-        timestamps: false
+    this.set('user.tags', undefined, {
+        strict: false
     });
 
     this.tags = this.tags.map(function (tag) {
-        return { 
-            _id: tag._id, 
-            name: tag.name 
+        return {
+            _id: tag._id,
+            name: tag.name
         };
     });
 

@@ -1,6 +1,7 @@
 const mongoose = require(process.env.CORE_LAYER_MODULE + 'mongoose');
 const mongoRepository = require(process.env.CORE_LAYER + 'repository/mongo.repository');
 const s3service = require(process.env.CORE_LAYER + 'services/s3.service');
+const talkValidation = require('../validations/talk.validation');
 const talk = require('../models/talk');
 const talkLikes = require('../models/talkLikes');
 
@@ -25,6 +26,33 @@ module.exports.search = async function (identity, options, me = false) {
     let likes = await mongoRepository.findMany(process.env.MONGODB, talkLikes.model, filter);
 
     return talks.map(talk => ({...talk._doc, liked: likes.some(like => like.talk._id.toString() == talk._id.toString())}))
+}
+
+module.exports.insert = async function (identity, body) {
+    talkValidation.validateUpsert(body)
+
+    let newTalk = new talk.model({
+        message: body.message,
+        midia: body.midia,
+        type: body.type,
+        attachments: body.attachments,
+        published: body.published,
+        scheduledAt: body.scheduledAt,
+        school: {
+            _id: mongoose.mongo.ObjectId(identity.schoolId)
+        },
+        user: {
+            _id: mongoose.mongo.ObjectId(identity.id),
+            firstname: identity.firstname,
+            lastname: identity.lastname,
+            photo: identity.photo
+        },
+        tags: body.tags
+    });
+    
+    await mongoRepository.insertOne(process.env.MONGODB, newTalk);
+
+    return await setS3Urls(newTalk, process.env.TALKS_BUCKET)
 }
 
 async function setS3Urls(object, bucket) {

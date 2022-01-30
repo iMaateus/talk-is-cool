@@ -12,3 +12,10 @@ talks-me:
         path: talk/me
         method: get
         cors: true
+talks-post:
+  handler: src/handlers/talks.post
+  events:
+    - http:
+        path: talk
+        method: post
+        cors: true
