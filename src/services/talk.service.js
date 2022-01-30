@@ -25,7 +25,7 @@ module.exports.search = async function (identity, options, me = false) {
 
     let likes = await mongoRepository.findMany(process.env.MONGODB, talkLikes.model, filter);
 
-    return talks.map(talk => ({...talk._doc, liked: likes.some(like => like.talk._id.toString() == talk._id.toString())}))
+    return talks.map(talk => ({ ...talk._doc, liked: likes.some(like => like.talk._id.toString() == talk._id.toString()) }))
 }
 
 module.exports.insert = async function (identity, body) {
@@ -49,7 +49,7 @@ module.exports.insert = async function (identity, body) {
         },
         tags: body.tags
     });
-    
+
     await mongoRepository.insertOne(process.env.MONGODB, newTalk);
 
     return await setS3Urls(newTalk, process.env.TALKS_BUCKET)
@@ -73,6 +73,30 @@ module.exports.dislike = async function (identity, talkId) {
     };
 
     return await mongoRepository.deleteOne(process.env.MONGODB, talkLikes.model, filter);
+}
+
+module.exports.delete = async function (identity, talkId) {
+    let filter = {
+        'school._id': mongoose.mongo.ObjectId(identity.schoolId),
+        '_id': mongoose.mongo.ObjectId(talkId)
+    };
+
+    if (!identity.isAdmin) {
+        filter['user._id'] = mongoose.mongo.ObjectId(identity.id)
+    }
+
+    let options = {
+        projection: 'midia type attachments'
+    }
+
+    let removeTalk = await mongoRepository.findOne(process.env.MONGODB, talk.model, filter, options);
+
+    if (removeTalk) {
+        await deleteS3Files(removeTalk, process.env.TALKS_BUCKET)
+        return await mongoRepository.deleteOne(process.env.MONGODB, talk.model, filter)
+    }
+
+    return null;
 }
 
 async function setS3Urls(object, bucket) {
@@ -101,4 +125,20 @@ async function setS3Urls(object, bucket) {
     }
 
     return object;
+}
+
+async function deleteS3Files(object, bucket) {
+    let keys = []
+
+    if (object.type == "picture" && object.midia) {
+        keys.push(object.midia)
+    }
+
+    if (object.attachments) {
+        for (let attachment of object.attachments) {
+            keys.push(attachment.key)
+        }
+    }
+
+    await s3service.deleteFiles(bucket, keys)
 }

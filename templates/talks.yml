@@ -33,3 +33,10 @@ talks-post:
         path: talk
         method: post
         cors: true
+talks-delete:
+  handler: src/handlers/talks.delete
+  events:
+    - http:
+        path: talk/{talkId}
+        method: delete
+        cors: true

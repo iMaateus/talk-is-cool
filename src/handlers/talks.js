@@ -36,6 +36,6 @@ module.exports.post = middy(async (event, context, callback) => {
 
 module.exports.delete = middy(async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
-    return await talkService.delete(event.identity, event.pathParameters.eventId);
+    return await talkService.delete(event.identity, event.pathParameters.talkId);
 }).use(parser())
     .use(requestHandler({ private: true, permissions: ['ADMIN', 'TEACHER', 'COORDINATOR', 'SECRETARY'] }))

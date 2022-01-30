@@ -13,3 +13,13 @@ exports.getSignedUrl = async function (bucket, key, expires) {
         })
     })
 }
+
+exports.deleteFiles = async function (bucket, keys) {
+    const s3 = new AWS.S3()
+    const objects = keys.map(key => ({ Key: key }));
+
+    await s3.deleteObjects({
+            Bucket: bucket,
+            Delete: { Objects: objects },
+        }).promise();
+}
